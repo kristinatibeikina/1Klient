@@ -28,14 +28,13 @@
 
             <div
                     class="color-box"
-                    v-for="variant in variants"
+                    v-for="(variant, index) in variants"
                     :key="variant.variantId"
                     :style="{ backgroundColor:variant.variantColor }"
                     @mouseover="updateProduct(variant.variantImage)"
-            >
-            </div>
+            ></div>
 
-            <div class="cart">
+        <div class="cart">
                 <p>Cart({{ cart }})</p>
             </div>
 
@@ -47,6 +46,7 @@
                 Add to cart
             </button>
         </div>
+
 
     </div>
 </div>
