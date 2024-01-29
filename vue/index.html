@@ -19,7 +19,7 @@
         </div>
 
         <div class="product-info">
-            <h1>{{ product }}</h1>
+            <h1>{{ title }}</h1>
             <p v-if="inStock">In stock</p>
             <p v-else>Out of Stock</p>
             <ul>
@@ -46,13 +46,11 @@
             >
                 Add to cart
             </button>
-            <p v-if="inStock">In Stock</p>
-            <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
-
         </div>
 
     </div>
 </div>
+
 
 </body>
 </html>
