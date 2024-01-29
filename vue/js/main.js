@@ -6,7 +6,7 @@ let app = new Vue({
         altText: "A pair of socks",
         inStock: true,
         details: ['80% cotton', '20% polyester', 'Gender-neutral'],
-        cart: 0,
+        cart: 10,
         variants: [
             {
                 variantId: 2234,
@@ -27,6 +27,9 @@ let app = new Vue({
         },
         updateProduct(variantImage) {
             this.image = variantImage
+        },
+        deleteToCart(){
+            this.cart -=1
         }
 
     },
