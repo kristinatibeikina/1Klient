@@ -4,10 +4,11 @@ let app = new Vue({
         product: "Socks",
         image: "./assets/vmSocks-green-onWhite.jpg",
         altText: "A pair of socks",
-        onSale: true,
-        inventory: 100,
-
+        inStock: true,
+        details: ['80% cotton', '20% polyester', 'Gender-neutral']
     }
 })
+
+
 
 
