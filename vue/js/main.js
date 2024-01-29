@@ -7,6 +7,11 @@ let app = new Vue({
         inStock: true,
         details: ['80% cotton', '20% polyester', 'Gender-neutral'],
         cart: 0,
+        methods: {
+            addToCart() {
+                this.cart += 1
+            }
+        },
         variants: [
             {
                 variantId: 2234,
