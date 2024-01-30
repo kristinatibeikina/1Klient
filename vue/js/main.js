@@ -1,16 +1,3 @@
-Vue.component('product-details', {
-    props: {
-        details: {
-            type: Array,
-            required: true
-        }
-    },
-    template: `
-    <ul>
-      <li v-for="detail in details">{{ detail }}</li>
-    </ul>
-  `
-})
 Vue.component('product', {
     props: {
         premium: {
@@ -20,18 +7,18 @@ Vue.component('product', {
     },
     template: `
    <div class="product">
-	    <div id="app">
-   <div class="product">
-       <div class="product-image">
+    <div class="product-image">
            <img :src="image" :alt="altText"/>
        </div>
-   
+
        <div class="product-info">
            <h1>{{ title }}</h1>
            <p v-if="inStock">In stock</p>
            <p v-else>Out of Stock</p>
-           <product-details :details="details"></product-details>
-
+           <ul>
+               <li v-for="detail in details">{{ detail }}</li>
+           </ul>
+          <p>Shipping: {{ shipping }}</p>
            <div
                    class="color-box"
                    v-for="(variant, index) in variants"
@@ -39,12 +26,7 @@ Vue.component('product', {
                    :style="{ backgroundColor:variant.variantColor }"
                    @mouseover="updateProduct(index)"
            ></div>
-           </div>
-            <p>Shipping: {{ shipping }}</p>
-           <div class="cart">
-               <p>Cart({{ cart }})</p>
-           </div>
-
+          
            <button
                    v-on:click="addToCart"
                    :disabled="!inStock"
@@ -52,11 +34,8 @@ Vue.component('product', {
            >
                Add to cart
            </button>
+       
        </div>
-
-   </div>
-</div>
-
    </div>
  `,
     data() {
@@ -64,7 +43,6 @@ Vue.component('product', {
             product: "Socks",
             brand: 'Vue Mastery',
             selectedVariant: 0,
-            onSale: true,
             altText: "A pair of socks",
             details: ['80% cotton', '20% polyester', 'Gender-neutral'],
             variants: [
@@ -81,12 +59,11 @@ Vue.component('product', {
                     variantQuantity: 0
                 }
             ],
-            cart: 0
         }
     },
     methods: {
         addToCart() {
-            this.cart += 1
+            this.$emit('add-to-cart');
         },
         updateProduct(index) {
             this.selectedVariant = index;
@@ -100,7 +77,7 @@ Vue.component('product', {
         image() {
             return this.variants[this.selectedVariant].variantImage;
         },
-        inStock(){
+        inStock() {
             return this.variants[this.selectedVariant].variantQuantity
         },
         shipping() {
@@ -110,15 +87,23 @@ Vue.component('product', {
                 return 2.99
             }
         }
-
     }
 })
 let app = new Vue({
     el: '#app',
     data: {
         premium: true,
+        cart: 0
+    },
+    methods: {
+        updateCart() {
+            this.cart += 1;
+        }
     }
+
 })
+
+
 
 
 
