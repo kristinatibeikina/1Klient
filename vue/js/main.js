@@ -31,9 +31,21 @@ Vue.component('product-review', {
    </select>
  </p>
 
- <p>
-   <input type="submit" value="Submit"> 
- </p>
+        <p>Would you recommend this product?</p>
+        <label>
+          Yes
+          <input type="radio" value="Yes" v-model="recommend"/>
+        </label>
+        <label>
+          No
+          <input type="radio" value="No" v-model="recommend"/>
+        </label>
+            
+        <p>
+          <input type="submit" value="Submit">  
+        </p>    
+      
+    </form>
 
 </form>
  `,
@@ -101,14 +113,14 @@ Vue.component('product', {
                    :class="{ disabledButton: !inStock }"
            >
                Add to cart
-           </button>
+           </button>    
            <button
-                   v-on:click="deleteToCart"
-                   :disabled="!inStock"
-                   :class="{ disabledButton: !inStock }"
+                 v-on:click="deleteToCart"
+                 :disabled="!inStock"
+                 :class="{ disabledButton: !inStock }"
            >
                Delete to cart
-           </button>    
+            </button>
        </div>           
        <div>
             <h2>Reviews</h2>
@@ -151,6 +163,9 @@ Vue.component('product', {
         addToCart() {
             this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
         },
+        deleteToCart() {
+            this.$emit('delete-to-cart', this.variants[this.selectedVariant].variantId);
+        },
         updateProduct(index) {
             this.selectedVariant = index;
             console.log(index);
@@ -178,8 +193,6 @@ Vue.component('product', {
         }
     }
 })
-
-
 let app = new Vue({
     el: '#app',
     data: {
@@ -190,15 +203,10 @@ let app = new Vue({
         updateCart(id) {
             this.cart.push(id);
         },
-        delUpdateCart(id){
+        delUpdateCart(id) {
             this.cart.pop(id);
         }
     }
 })
-
-
-
-
-
 
 
