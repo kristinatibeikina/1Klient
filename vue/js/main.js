@@ -1,4 +1,16 @@
-var eventBus = new Vue()
+let eventBus = new Vue()
+
+Vue.component('product-details', {
+    props: {
+        details: {
+            type: Array,
+            required: true
+        }
+    },
+    template: `
+    <product-details :details="details"></product-details>
+  `
+})
 
 Vue.component('product', {
     props: {
@@ -9,7 +21,6 @@ Vue.component('product', {
     },
     template: `
      <div class="product">
-          
         <div class="product-image">
           <img :src="image" />
         </div>
@@ -21,18 +32,17 @@ Vue.component('product', {
   
         <div class="product-info">
             <h1>{{ product }}</h1>
+            <span v-show="onSale">On Sale</span>
+            <p id="description">{{description}}</p>
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
   
-            <tabs-information :shipping="shipping" :details="details" ></tabs-information>
-           
-           <button :class="{ disabledButton: !noSizeS}" >S</button>
-           <button :class="{ disabledButton: !noSizeM}" >M</button>
-           <button :class="{ disabledButton: !noSizeL }" >L</button>
-           <button :class="{ disabledButton: !noSizeXl }" >XL</button>
-           <button :class="{ disabledButton: !noSizeXxl }" >XXL</button>
-           <button :class="{ disabledButton: !noSizeXxxl }" >XXXL</button>
-           
+            <info-tabs :shipping="shipping" :details="details"></info-tabs>
+            <div v-show="selectedTab === 'Sizes'">
+            <ul>
+            <li v-for="sizes in sizes">{{ sizes }}</li>
+            </ul>
+            </div>
   
             <div class="color-box"
                  v-for="(variant, index) in variants" 
@@ -56,12 +66,19 @@ Vue.component('product', {
             </button>
             <p v-if="inStock">In Stock</p>
             <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
-  
+            <tabs-information :shipping="shipping" :details="details" ></tabs-information>
+           
+           <button :class="{ disabledButton: !noSizeS}" >S</button>
+           <button :class="{ disabledButton: !noSizeM}" >M</button>
+           <button :class="{ disabledButton: !noSizeL }" >L</button>
+           <button :class="{ disabledButton: !noSizeXl }" >XL</button>
+           <button :class="{ disabledButton: !noSizeXxl }" >XXL</button>
+           <button :class="{ disabledButton: !noSizeXxxl }" >XXXL</button>
          </div> 
            
          <product-tabs :reviews="reviews"></product-tabs>
-         <a v-bind:href="link">More products like this.</a>
-      
+         <a v-bind:href="link">More products like this.</a><br><br>
+
       </div>
      `,
     data() {
@@ -69,6 +86,7 @@ Vue.component('product', {
             product: 'Socks',
             brand: 'Vue Mastery',
             selectedVariant: 0,
+            description: "A pair of warm, fuzzy socks",
             altText: "A pair of socks",
             onSale: true,
             link: 'https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks',
@@ -81,7 +99,7 @@ Vue.component('product', {
                     variantQuantity: 10,
                     sizeS:1,
                     sizeM: 0,
-                    sizeL:0,
+                    sizeL:12,
                     sizeXl: 10,
                     sizeXxl:0,
                     sizeXxxl: 10,
@@ -134,7 +152,7 @@ Vue.component('product', {
         noSizeXxl(){
             return this.variants[this.selectedVariant].sizeXxl;
         },
-        noSizeXxxl() {
+        noSizeXxxl(){
             return this.variants[this.selectedVariant].sizeXxxl;
         },
         sale() {
