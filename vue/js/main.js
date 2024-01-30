@@ -1,6 +1,11 @@
 
-
 Vue.component('product', {
+    props: {
+        premium: {
+            type: Boolean,
+            required: true
+        }
+    },
     template: `
    <div class="product">
 	    <div id="app">
@@ -8,7 +13,7 @@ Vue.component('product', {
        <div class="product-image">
            <img :src="image" :alt="altText"/>
        </div>
-
+   
        <div class="product-info">
            <h1>{{ title }}</h1>
            <p v-if="inStock">In stock</p>
@@ -25,7 +30,7 @@ Vue.component('product', {
                    @mouseover="updateProduct(index)"
            ></div>
            </div>
-
+            <p>User is premium: {{ premium }}</p>
            <div class="cart">
                <p>Cart({{ cart }})</p>
            </div>
@@ -92,7 +97,11 @@ Vue.component('product', {
 })
 let app = new Vue({
     el: '#app',
+    data: {
+        premium: true
+    }
 })
+
 
 
 
