@@ -136,7 +136,8 @@ Vue.component('product-review', {
         return {
             name: null,
             review: null,
-            rating: null
+            rating: null,
+            reviews: []
         }
     },
     methods:{
@@ -150,7 +151,11 @@ Vue.component('product-review', {
             this.name = null
             this.review = null
             this.rating = null
+        },
+        addReview(productReview) {
+            this.reviews.push(productReview)
         }
+
     }
 
 

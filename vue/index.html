@@ -18,6 +18,8 @@
     </div>
     <input v-model="name">
     <product :premium="premium" @add-to-cart="updateCart" @delete-to-cart="delUpdateCart"></product>
+    <product-review @review-submitted="addReview"></product-review>
+
 </div>
 
 
