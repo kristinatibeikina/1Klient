@@ -13,13 +13,26 @@ Vue.component('product', {
         <div class="product-image">
           <img :src="image" />
         </div>
+        <div v-show="selectedTab === 'Sizes'">
+        <ul>
+        <li v-for="sizes in sizes">{{ sizes }}</li>
+        </ul>
+        </div>
   
         <div class="product-info">
             <h1>{{ product }}</h1>
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
   
-            <info-tabs :shipping="shipping" :details="details"></info-tabs>
+            <tabs-information :shipping="shipping" :details="details" ></tabs-information>
+           
+           <button :class="{ disabledButton: !noSizeS}" >S</button>
+           <button :class="{ disabledButton: !noSizeM}" >M</button>
+           <button :class="{ disabledButton: !noSizeL }" >L</button>
+           <button :class="{ disabledButton: !noSizeXl }" >XL</button>
+           <button :class="{ disabledButton: !noSizeXxl }" >XXL</button>
+           <button :class="{ disabledButton: !noSizeXxxl }" >XXXL</button>
+           
   
             <div class="color-box"
                  v-for="(variant, index) in variants" 
@@ -65,7 +78,13 @@ Vue.component('product', {
                     variantId: 2234,
                     variantColor: 'green',
                     variantImage: "./assets/vmSocks-green-onWhite.jpg",
-                    variantQuantity: 10
+                    variantQuantity: 10,
+                    sizeS:1,
+                    sizeM: 0,
+                    sizeL:0,
+                    sizeXl: 10,
+                    sizeXxl:0,
+                    sizeXxxl: 10,
                 },
                 {
                     variantId: 2235,
@@ -99,6 +118,24 @@ Vue.component('product', {
         },
         inStock(){
             return this.variants[this.selectedVariant].variantQuantity
+        },
+        noSizeS(){
+            return this.variants[this.selectedVariant].sizeS;
+        },
+        noSizeM(){
+            return this.variants[this.selectedVariant].sizeM;
+        },
+        noSizeL(){
+            return this.variants[this.selectedVariant].sizeL;
+        },
+        noSizeXl(){
+            return this.variants[this.selectedVariant].sizeXl;
+        },
+        noSizeXxl(){
+            return this.variants[this.selectedVariant].sizeXxl;
+        },
+        noSizeXxxl() {
+            return this.variants[this.selectedVariant].sizeXxxl;
         },
         sale() {
             if (this.onSale) {
